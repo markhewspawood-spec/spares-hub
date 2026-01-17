@@ -95,6 +95,10 @@ const S: Record<string, React.CSSProperties> = {
     background: `radial-gradient(1200px 800px at 15% 0%, rgba(60,255,180,.10) 0%, ${NAVY} 55%)`,
     color: WHITE,
   },
+  const [route, setRoute] = useState<
+  "landing" | "browse" | "sell" | "signin"
+>("landing");
+
   topbar: {
     position: "sticky",
     top: 0,
@@ -196,4 +200,91 @@ const S: Record<string, React.CSSProperties> = {
     flexWrap: "wrap",
     alignItems: "center",
   },
+  function LandingPage({ onStart, onSignIn }: {
+  onStart: () => void;
+  onSignIn: () => void;
+}) {
+if (route === "landing") {
+  return (
+    <LandingPage
+      onStart={() => setRoute("browse")}
+      onSignIn={() => setRoute("signin")}
+    />
+  );
+}
+
+    return (
+    <div
+      style={{
+        minHeight: "100vh",
+        backgroundImage: "url(/src/assets/spares-hub-landing.jpg)",
+        backgroundSize: "cover",
+        backgroundPosition: "center",
+        backgroundRepeat: "no-repeat",
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "center",
+        position: "relative",
+      }}
+    >
+      {/* Dark overlay */}
+      <div
+        style={{
+          position: "absolute",
+          inset: 0,
+          background:
+            "linear-gradient(180deg, rgba(7,11,20,.55), rgba(7,11,20,.85))",
+        }}
+      />
+
+      {/* Content */}
+      <div
+        style={{
+          position: "relative",
+          zIndex: 2,
+          textAlign: "center",
+          maxWidth: 520,
+          padding: 24,
+          color: WHITE,
+        }}
+      >
+        <div style={{ marginBottom: 18 }}>
+          <span style={{ color: ACCENT, fontWeight: 950, fontSize: 34 }}>
+            Spares
+          </span>
+          <span style={{ fontWeight: 950, fontSize: 34 }}>Hub</span>
+        </div>
+
+        <div style={{ fontSize: 16, opacity: 0.85, marginBottom: 32 }}>
+          Original, authentic parts for pre-2000 vehicles.
+          <br />
+          Used. NOS. Overhauled.
+        </div>
+
+        <div style={{ display: "grid", gap: 14 }}>
+          <button
+            style={{
+              ...S.btnPrimary,
+              fontSize: 16,
+            }}
+            onClick={onStart}
+          >
+            Start searching
+          </button>
+
+          <button
+            style={{
+              ...S.btnSecondary,
+              fontSize: 15,
+            }}
+            onClick={onSignIn}
+          >
+            Sign in
+          </button>
+        </div>
+      </div>
+    </div>
+  );
+}
+
 };
